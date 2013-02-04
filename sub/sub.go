@@ -84,24 +84,27 @@ func main() {
 	u := rrd.NewUpdater(dbfile)
 	for {
 		// receive multi-part msg topic + stat
-		msg, _ := socket.RecvMultipart(0)
-
-		// write to buffer
-		network.Write(msg[1])
-
-		// decode network into stat
-		dec := gob.NewDecoder(&network)
-		dec.Decode(&stat)
-
-		// clear the buffer
-		network.Reset()
-
-		fmt.Printf("%s @ %+v\n", time.Now().In(Eastern).Format(time.RFC822), stat)
-
-		// update RRD file
-		err = u.Update(time.Now(), stat.Load.One, stat.Load.Five, stat.Load.Fifteen)
+		msg, err := socket.RecvMultipart(0)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Printf("ERROR: %+v\n", msg)
+		} else {
+			// write to buffer
+			network.Write(msg[1])
+
+			// decode network into stat
+			dec := gob.NewDecoder(&network)
+			dec.Decode(&stat)
+
+			// clear the buffer
+			network.Reset()
+
+			fmt.Printf("%s @ %+v\n", time.Now().In(Eastern).Format(time.RFC822), stat)
+
+			// update RRD file
+			err = u.Update(time.Now(), stat.Load.One, stat.Load.Five, stat.Load.Fifteen)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
