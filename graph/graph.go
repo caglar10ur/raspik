@@ -16,7 +16,7 @@ func main() {
 	g.SetVLabel("System Load")
 	g.SetSize(800, 300)
 
-	g.SetWatermark("Raspik")
+	g.SetWatermark(time.Now().Format(time.RFC822))
 	g.SetAltAutoscaleMax()
 	g.SetSlopeMode()
 
