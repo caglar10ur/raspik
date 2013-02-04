@@ -1,1 +1,3 @@
 # Raspik
+
+Raspik is a basic PUB/SUB statistic collection infrastructure which uses ZeroMQ for transportation layer and RRDtools for storing/drawing the data...
