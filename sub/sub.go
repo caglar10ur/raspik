@@ -6,10 +6,10 @@ import (
 	"github.com/caglar10ur/raspik"
 	"github.com/caglar10ur/rrd"
 
+	"github.com/caglar10ur/gologger"
+
 	"bytes"
 	"encoding/gob"
-	"fmt"
-	"log"
 	"os"
 	"time"
 )
@@ -60,6 +60,8 @@ func main() {
 	// Stand-in for a network connection
 	var network bytes.Buffer
 
+	log := logger.New(nil)
+
 	// context
 	context, _ := zmq.NewContext()
 	defer context.Close()
@@ -76,7 +78,7 @@ func main() {
 	if os.IsNotExist(err) {
 		err = createLoadRRD()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalln(err)
 		}
 	}
 
@@ -86,7 +88,7 @@ func main() {
 		// receive multi-part msg topic + stat
 		msg, err := socket.RecvMultipart(0)
 		if err != nil {
-			fmt.Printf("ERROR: %+v\n", msg)
+			log.Errorf("ERROR: %+v\n", msg)
 		} else {
 			// write to buffer
 			network.Write(msg[1])
@@ -98,12 +100,12 @@ func main() {
 			// clear the buffer
 			network.Reset()
 
-			fmt.Printf("%s @ %+v\n", time.Now().In(Eastern).Format(time.RFC822), stat)
+			log.Debugf("%s @ %+v\n", time.Now().In(Eastern).Format(time.RFC822), stat)
 
 			// update RRD file
 			err = u.Update(time.Now(), stat.Load.One, stat.Load.Five, stat.Load.Fifteen)
 			if err != nil {
-				log.Fatal(err)
+				log.Errorln(err)
 			}
 		}
 	}
