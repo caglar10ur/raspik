@@ -27,9 +27,19 @@ func main() {
 	g.Def("5min", dbfile, "load5", "AVERAGE")
 	g.Def("15min", dbfile, "load15", "AVERAGE")
 
-	g.Line(1, "1min", "33cc33", "1 Min Load Avg")
-	g.Line(1, "5min", "ff0000", "5 Min Load Avg")
-	g.Line(1, "15min", "0000ff", "15 Min Load Avg")
+	// get the average
+	g.VDef("1minAverage", "1min,AVERAGE")
+	g.VDef("5minAverage", "5min,AVERAGE")
+	g.VDef("15minAverage", "15min,AVERAGE")
+
+	// use the average if the value is UN
+	g.CDef("1minModified", "1min,UN,1minAverage,1min,IF")
+	g.CDef("5minModified", "5min,UN,5minAverage,5min,IF")
+	g.CDef("15minModified", "15min,UN,15minAverage,15min,IF")
+
+	g.Line(1, "1minModified", "33cc33", "1 Min Load Avg")
+	g.Line(1, "5minModified", "ff0000", "5 Min Load Avg")
+	g.Line(1, "15minModified", "0000ff", "15 Min Load Avg")
 
 	now := time.Now()
 	_, err := g.SaveGraph("/home/caglar/web/rrd.png", now.Add(-24*time.Hour), now)
