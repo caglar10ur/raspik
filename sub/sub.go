@@ -43,15 +43,15 @@ func createRRD() error {
 	c.DS("Fifteen", "GAUGE", heartbeat, 0, 100)
 
 	// mem
-	c.DS("TotalRam", "GAUGE", heartbeat, 0, 100)
-	c.DS("FreeRam", "GAUGE", heartbeat, 0, 100)
-	c.DS("SharedRam", "GAUGE", heartbeat, 0, 100)
-	c.DS("BufferRam", "GAUGE", heartbeat, 0, 100)
+	c.DS("TotalRam", "GAUGE", heartbeat, 0, "U")
+	c.DS("FreeRam", "GAUGE", heartbeat, 0, "U")
+	c.DS("SharedRam", "GAUGE", heartbeat, 0, "U")
+	c.DS("BufferRam", "GAUGE", heartbeat, 0, "U")
 
 	// swap
-	c.DS("TotalSwap", "GAUGE", heartbeat, 0, 100)
-	c.DS("UsedSwap", "GAUGE", heartbeat, 0, 100)
-	c.DS("FreeSwap", "GAUGE", heartbeat, 0, 100)
+	c.DS("TotalSwap", "GAUGE", heartbeat, 0, "U")
+	c.DS("UsedSwap", "GAUGE", heartbeat, 0, "U")
+	c.DS("FreeSwap", "GAUGE", heartbeat, 0, "U")
 
 	// three RRAs with a resolution of 5 minutes spanning 31 days using the AVERAGE, MIN, and MAX consolidation functions,
 	c.RRA("AVERAGE", 0.5, 1, 89280)
