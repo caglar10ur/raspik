@@ -8,11 +8,10 @@ import (
 )
 
 func main() {
-	const dbfile = "load.rrd"
+	const dbfile = "raspik.rrd"
 
 	g := rrd.NewGrapher()
 
-	g.SetTitle("Last 24 Hours")
 	g.SetVLabel("System Load")
 	g.SetSize(800, 300)
 
@@ -23,9 +22,9 @@ func main() {
 	g.SetInterlaced()
 	g.SetImageFormat("PNG")
 
-	g.Def("1min", dbfile, "load1", "AVERAGE")
-	g.Def("5min", dbfile, "load5", "AVERAGE")
-	g.Def("15min", dbfile, "load15", "AVERAGE")
+	g.Def("1min", dbfile, "One", "AVERAGE")
+	g.Def("5min", dbfile, "Five", "AVERAGE")
+	g.Def("15min", dbfile, "Fifteen", "AVERAGE")
 
 	// get the average
 	g.VDef("1minAverage", "1min,AVERAGE")
@@ -42,8 +41,23 @@ func main() {
 	g.Line(1, "15minModified", "0000ff", "15 Min Load Avg")
 
 	now := time.Now()
-	_, err := g.SaveGraph("/home/caglar/web/rrd.png", now.Add(-24*time.Hour), now)
+
+	g.SetTitle("Last 24 Hours")
+	_, err := g.SaveGraph("/home/caglar/raspik/systemload24h.png", now.Add(-24*time.Hour), now)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	g.SetTitle("Last Week")
+	_, err = g.SaveGraph("/home/caglar/raspik/systemload7d.png", now.Add(7*-24*time.Hour), now)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	g.SetTitle("Last Month")
+	_, err = g.SaveGraph("/home/caglar/raspik/systemload30d.png", now.Add(30*-24*time.Hour), now)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
