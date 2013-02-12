@@ -3,11 +3,11 @@ package main
 import (
 	zmq "github.com/alecthomas/gozmq"
 
+	"github.com/caglar10ur/gologger"
 	"github.com/caglar10ur/raspik"
 
 	"bytes"
 	"encoding/gob"
-	"fmt"
 	"time"
 )
 
@@ -23,6 +23,9 @@ func main() {
 
 	// Stand-in for a network connection
 	var network bytes.Buffer
+
+	log := logger.New(nil)
+	log.SetLogLevel(logger.Debug)
 
 	// types
 	load := raspik.Load{}
@@ -56,7 +59,7 @@ func main() {
 		enc := gob.NewEncoder(&network)
 		enc.Encode(stat)
 
-		fmt.Printf("Sending %+v\n", stat)
+		log.Debugf("Sending %+v\n", stat)
 
 		// send it as multi-part msg topic + stat
 		socket.Send([]byte("raspik"), zmq.SNDMORE)
