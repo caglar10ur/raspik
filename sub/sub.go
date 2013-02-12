@@ -22,7 +22,7 @@ var (
 )
 
 const (
-	dbfile    = "load.rrd"
+	dbfile    = "raspik.rrd"
 	step      = 30
 	heartbeat = 2 * step
 )
@@ -34,12 +34,24 @@ type Stats struct {
 	raspik.Swap
 }
 
-func createLoadRRD() error {
+func createRRD() error {
 	c := rrd.NewCreator(dbfile, time.Now(), step)
 
-	c.DS("load1", "GAUGE", heartbeat, 0, 100)
-	c.DS("load5", "GAUGE", heartbeat, 0, 100)
-	c.DS("load15", "GAUGE", heartbeat, 0, 100)
+	// load
+	c.DS("One", "GAUGE", heartbeat, 0, 100)
+	c.DS("Five", "GAUGE", heartbeat, 0, 100)
+	c.DS("Fifteen", "GAUGE", heartbeat, 0, 100)
+
+	// mem
+	c.DS("TotalRam", "GAUGE", heartbeat, 0, 100)
+	c.DS("FreeRam", "GAUGE", heartbeat, 0, 100)
+	c.DS("SharedRam", "GAUGE", heartbeat, 0, 100)
+	c.DS("BufferRam", "GAUGE", heartbeat, 0, 100)
+
+	// swap
+	c.DS("TotalSwap", "GAUGE", heartbeat, 0, 100)
+	c.DS("UsedSwap", "GAUGE", heartbeat, 0, 100)
+	c.DS("FreeSwap", "GAUGE", heartbeat, 0, 100)
 
 	// three RRAs with a resolution of 5 minutes spanning 31 days using the AVERAGE, MIN, and MAX consolidation functions,
 	c.RRA("AVERAGE", 0.5, 1, 89280)
@@ -76,7 +88,7 @@ func main() {
 	// create RRD file if not exists
 	_, err := os.Stat(dbfile)
 	if os.IsNotExist(err) {
-		err = createLoadRRD()
+		err = createRRD()
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -103,7 +115,9 @@ func main() {
 			log.Debugf("%s @ %+v\n", time.Now().In(Eastern).Format(time.RFC822), stat)
 
 			// update RRD file
-			err = u.Update(time.Now(), stat.Load.One, stat.Load.Five, stat.Load.Fifteen)
+			err = u.Update(time.Now(), stat.Load.One, stat.Load.Five, stat.Load.Fifteen,
+				stat.Mem.TotalRam, stat.Mem.FreeRam, stat.Mem.SharedRam, stat.Mem.BufferRam,
+				stat.Swap.TotalSwap, stat.Swap.UsedSwap, stat.Swap.FreeSwap)
 			if err != nil {
 				log.Errorln(err)
 			}
