@@ -22,7 +22,7 @@ var (
 )
 
 const (
-	dbfile    = "raspik.rrd"
+	dbfile    = "/home/caglar/raspik/raspik.rrd"
 	step      = 30
 	heartbeat = 2 * step
 )

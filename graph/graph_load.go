@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	const dbfile = "raspik.rrd"
+	const dbfile = "/home/caglar/raspik/raspik.rrd"
 
 	g := rrd.NewGrapher()
 
