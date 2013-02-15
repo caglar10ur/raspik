@@ -37,8 +37,8 @@ func main() {
 	g.CDef("usedModifiedNeg", "0,usedModified,-")
 
 	g.Line(2, "totalModified", "FF0000", "Total Swap")
-	g.Area("usedModifiedNeg", "00FF00", "Used Swap")
-	g.Area("freeModified", "0000FF", "Free Swap")
+	g.Area("usedModifiedNeg", "0000FF", "Used Swap")
+	g.Area("freeModified", "00FF00", "Free Swap")
 
 	g.HRule("0", "000000")
 
