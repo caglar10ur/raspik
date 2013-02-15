@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>.: Raspik :.</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://10ur.org/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://10ur.org/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <meta name="description" content="raspik">
+        <meta name="author" content="S.Çağlar Onur">
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="page-header">
+                <h1>Raspik <small>Stats</small></h1>
+            </div>
+
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#l24h" data-toggle="tab">System Load (Last 24 Hours)</a></li>
+                    <li><a href="#l7d" data-toggle="tab">System Load (Last 7 days)</a></li>
+                    <li><a href="#l30d" data-toggle="tab">System Load (Last 30 days)</a></li>
+                    <li><a href="#m24h" data-toggle="tab">Memory (Last 24 Hours)</a></li>
+                    <li><a href="#m7d" data-toggle="tab">Memory (Last 7 days)</a></li>
+                    <li><a href="#m30d" data-toggle="tab">Memory (Last 30 days)</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="l24h" class="tab-pane active" style="text-align: center;">
+                        <h1>24 Hours</h1>
+                        <img src="systemload24h.png" alt="24h">
+                    </div>
+                    <div id="l7d" class="tab-pane" style="text-align: center;">
+                        <h1>7 days</h1>
+                        <img src="systemload7d.png" alt="7d">
+                    </div>
+                    <div id="l30d" class="tab-pane" style="text-align: center;">
+                        <h1>30 days</h1>
+                        <img src="systemload30d.png" alt="30">
+                    </div>
+                    <div id="m24h" class="tab-pane" style="text-align: center;">
+                        <h1>24 Hours</h1>
+                        <img src="systemmem24h.png" alt="24h">
+                    </div>
+                    <div id="m7d" class="tab-pane" style="text-align: center;">
+                        <h1>7 days</h1>
+                        <img src="systemmem7d.png" alt="7d">
+                    </div>
+                    <div id="m30d" class="tab-pane" style="text-align: center;">
+                        <h1>30 days</h1>
+                        <img src="systemmem30d.png" alt="30">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="http://10ur.org/bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>
