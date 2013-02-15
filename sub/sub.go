@@ -10,6 +10,7 @@ import (
 
 	"bytes"
 	"encoding/gob"
+	"flag"
 	"os"
 	"time"
 )
@@ -19,7 +20,13 @@ var (
 	Central  = time.FixedZone("Central", -6*3600)
 	Mountain = time.FixedZone("Mountain", -7*3600)
 	Pacific  = time.FixedZone("Pacific", -8*3600)
+	Debug    bool
 )
+
+func init() {
+	flag.BoolVar(&Debug, "Debug", false, "Debug")
+	flag.Parse()
+}
 
 const (
 	dbfile    = "/home/caglar/raspik/raspik.rrd"
@@ -73,6 +80,9 @@ func main() {
 	var network bytes.Buffer
 
 	log := logger.New(nil)
+	if Debug {
+		log.SetLogLevel(logger.Debug)
+	}
 
 	// context
 	context, _ := zmq.NewContext()

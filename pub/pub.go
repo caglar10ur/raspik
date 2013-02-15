@@ -8,6 +8,7 @@ import (
 
 	"bytes"
 	"encoding/gob"
+	"flag"
 	"time"
 )
 
@@ -18,6 +19,18 @@ type Stats struct {
 	raspik.Swap
 }
 
+var (
+	Hostname string
+	Port     uint
+	Debug    bool
+)
+
+func init() {
+	flag.UintVar(&Port, "Port", 5000, "Port number")
+	flag.StringVar(&Hostname, "Hostname", "10ur.org", "Hostname")
+	flag.BoolVar(&Debug, "Debug", false, "Debug")
+	flag.Parse()
+}
 func main() {
 	var stat Stats
 
@@ -25,7 +38,9 @@ func main() {
 	var network bytes.Buffer
 
 	log := logger.New(nil)
-	log.SetLogLevel(logger.Debug)
+	if Debug {
+		log.SetLogLevel(logger.Debug)
+	}
 
 	// types
 	load := raspik.Load{}
@@ -42,7 +57,7 @@ func main() {
 
 	// socket
 	socket, _ := context.NewSocket(zmq.PUB)
-	socket.Connect("tcp://10ur.org:5000")
+	socket.Connect(fmt.Sprintf("tcp://%s:%d", Hostname, Port))
 	socket.SetSockOptUInt64(zmq.HWM, 1)
 	defer socket.Close()
 
