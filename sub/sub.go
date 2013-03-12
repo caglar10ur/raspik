@@ -16,11 +16,8 @@ import (
 )
 
 var (
-	Eastern  = time.FixedZone("Eastern", -5*3600)
-	Central  = time.FixedZone("Central", -6*3600)
-	Mountain = time.FixedZone("Mountain", -7*3600)
-	Pacific  = time.FixedZone("Pacific", -8*3600)
-	Debug    bool
+	New_York, _ = time.LoadLocation("America/New_York")
+	Debug       bool
 )
 
 func init() {
@@ -122,7 +119,7 @@ func main() {
 			// clear the buffer
 			network.Reset()
 
-			log.Debugf("%s @ %+v\n", time.Now().In(Eastern).Format(time.RFC822), stat)
+			log.Debugf("%s @ %+v\n", time.Now().In(New_York).Format(time.RFC822), stat)
 
 			// update RRD file
 			err = u.Update(time.Now(), stat.Load.One, stat.Load.Five, stat.Load.Fifteen,
