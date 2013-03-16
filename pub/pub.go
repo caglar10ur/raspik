@@ -74,7 +74,7 @@ func main() {
 		log.Debugf("Sending %+v\n", stat)
 
 		// send it as multi-part msg topic + stat
-		socket.SendMessage("raspik", network)
+		socket.SendMessage("raspik", &network)
 
 		// clear the buffer
 		network.Reset()
