@@ -1,7 +1,7 @@
 package main
 
 import (
-	zmq "github.com/alecthomas/gozmq"
+	zmq "github.com/pebbe/zmq2"
 
 	"github.com/caglar10ur/raspik"
 	"github.com/caglar10ur/rrd"
@@ -81,15 +81,11 @@ func main() {
 		log.SetLogLevel(logger.Debug)
 	}
 
-	// context
-	context, _ := zmq.NewContext()
-	defer context.Close()
-
 	// socket
-	socket, _ := context.NewSocket(zmq.SUB)
+	socket, _ := zmq.NewSocket(zmq.SUB)
 	socket.Bind("tcp://*:5000")
 	// filter out topics other than raspik
-	socket.SetSockOptString(zmq.SUBSCRIBE, "raspik")
+	socket.SetSubscribe("raspik")
 	defer socket.Close()
 
 	// create RRD file if not exists
@@ -105,7 +101,7 @@ func main() {
 	u := rrd.NewUpdater(dbfile)
 	for {
 		// receive multi-part msg topic + stat
-		msg, err := socket.RecvMultipart(0)
+		msg, err := socket.RecvMessageBytes(0)
 		if err != nil {
 			log.Errorf("ERROR: %+v\n", msg)
 		} else {

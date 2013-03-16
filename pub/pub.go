@@ -1,7 +1,7 @@
 package main
 
 import (
-	zmq "github.com/alecthomas/gozmq"
+	zmq "github.com/pebbe/zmq2"
 
 	"github.com/caglar10ur/gologger"
 	"github.com/caglar10ur/raspik"
@@ -52,14 +52,10 @@ func main() {
 	// polymorphism
 	getter := [...]raspik.Getter{&load, &up, &mem, &swap}
 
-	// context
-	context, _ := zmq.NewContext()
-	defer context.Close()
-
 	// socket
-	socket, _ := context.NewSocket(zmq.PUB)
+	socket, _ := zmq.NewSocket(zmq.PUB)
 	socket.Connect(fmt.Sprintf("tcp://%s:%d", Hostname, Port))
-	socket.SetSockOptUInt64(zmq.HWM, 1)
+	socket.SetHwm(1)
 	defer socket.Close()
 
 	for {
@@ -78,8 +74,7 @@ func main() {
 		log.Debugf("Sending %+v\n", stat)
 
 		// send it as multi-part msg topic + stat
-		socket.Send([]byte("raspik"), zmq.SNDMORE)
-		socket.Send(network.Bytes(), 0)
+		socket.SendMessage("raspik", network)
 
 		// clear the buffer
 		network.Reset()
