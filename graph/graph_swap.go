@@ -60,4 +60,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	g.SetTitle("Last Year")
+	_, err = g.SaveGraph("/home/caglar/raspik/systemswap365d.png", now.Add(365*-24*time.Hour), now)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
