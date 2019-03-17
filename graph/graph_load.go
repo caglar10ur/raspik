@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/caglar10ur/rrd"
+	"github.com/ziutek/rrd"
 )
 
 func main() {

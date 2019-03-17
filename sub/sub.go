@@ -1,10 +1,10 @@
 package main
 
 import (
-	zmq "github.com/pebbe/zmq2"
+	zmq "github.com/pebbe/zmq4"
 
 	"github.com/caglar10ur/raspik"
-	"github.com/caglar10ur/rrd"
+	"github.com/ziutek/rrd"
 
 	"github.com/caglar10ur/gologger"
 

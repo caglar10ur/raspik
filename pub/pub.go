@@ -1,7 +1,7 @@
 package main
 
 import (
-	zmq "github.com/pebbe/zmq2"
+	zmq "github.com/pebbe/zmq4"
 
 	"github.com/caglar10ur/gologger"
 	"github.com/caglar10ur/raspik"
@@ -54,9 +54,9 @@ func main() {
 
 	// socket
 	socket, _ := zmq.NewSocket(zmq.PUB)
-	socket.Connect(fmt.Sprintf("tcp://%s:%d", Hostname, Port))
-	socket.SetHwm(1)
 	defer socket.Close()
+
+	socket.Connect(fmt.Sprintf("tcp://%s:%d", Hostname, Port))
 
 	for {
 		// collect values

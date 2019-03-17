@@ -1,0 +1,6 @@
+github.com/caglar10ur/gologger v0.0.0-20150122231141-70b7e0b2e4af h1:B+rcFhj0DNO5GN1o3EIGHllwH6sJcYMGewk9jX8/7tw=
+github.com/caglar10ur/gologger v0.0.0-20150122231141-70b7e0b2e4af/go.mod h1:msn8SX6zPZz3uDlccYcyuqEPwLDeGTHItdak2MpGmi4=
+github.com/pebbe/zmq4 v1.0.0 h1:D+MSmPpqkL5PSSmnh8g51ogirUCyemThuZzLW7Nrt78=
+github.com/pebbe/zmq4 v1.0.0/go.mod h1:7N4y5R18zBiu3l0vajMUWQgZyjv464prE8RCyBcmnZM=
+github.com/ziutek/rrd v0.0.0-20170125160940-86f4f09e7abb h1:PyyvUBJ5QfaEKL/IRe0kzckEWMmufuCWEokPOx9RLHo=
+github.com/ziutek/rrd v0.0.0-20170125160940-86f4f09e7abb/go.mod h1:kncaQbFuKfmLNOnFKb9VQJ6qWV61iHxIxUQZBZvbEfA=
